@@ -11,7 +11,7 @@
 *       LinkedList 物理地址可能不连续，逻辑地址连续，通过next对链表进行遍历， -->　顺序读取，随机存取
 *       当我们对链表进行遍历时，我们需要读取到每一个节点，因此我们的循环判断条件应该是 head != null
 *       当我们对链表进行增删操作时，我们只需要读取到尾节点，因此我们的循环判断条件应该是 head.next != null
-* * */
+* */
 public class MySingleList {
 
     static class ListNode{
@@ -19,6 +19,10 @@ public class MySingleList {
         private int value;
         // 引用 --> 指向下一个节点的地址
         public ListNode next;
+
+        public int getValue() {
+            return value;
+        }
 
         public ListNode(int value) {
             this.value = value;
@@ -65,6 +69,7 @@ public class MySingleList {
             head = newNode;
             return;
         }
+        // 找到最后一个节点
         while (cur.next != null){
             cur = cur.next;
         }
@@ -119,7 +124,7 @@ public class MySingleList {
         cur.next = null;
     }
 
-    // 任意位置删  1、找到删除节点的前一个节点  2、删除的节点 del = cur.next  3、cur.next = de.ext
+    // 任意位置删  1、找到删除节点的前一个节点  2、删除的节点 del = cur.next  3、cur.next = del.ext
     public void delByIndex(int index){
         if (index < 0 || index > size()){
             System.out.println("索引不合法！");
@@ -183,6 +188,15 @@ public class MySingleList {
         System.out.println();
     }
 
+    // 方法重载 --> 从传入的节点处开始遍历链表
+    public void display(ListNode node){
+        while (node != null){
+            System.out.print(node.value + " ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
     // 得到链表的长度
     public int size(){
         ListNode cur = head;
@@ -193,6 +207,11 @@ public class MySingleList {
             cur = cur.next;
         }
         return count;
+    }
+
+    // 清空链表
+    public void clean(){
+        this.head = null;
     }
 
     // 查找元素key是否包含在链表中

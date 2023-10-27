@@ -49,5 +49,9 @@ public class Demo2 {
         System.out.println("=========delByIndex(1)==========");
         mySingleList.delByIndex(1);
         mySingleList.display();
+
+        System.out.println("=========clean()==========");
+        mySingleList.clean();
+        mySingleList.display();
     }
 }
