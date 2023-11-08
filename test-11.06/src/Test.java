@@ -36,6 +36,9 @@ public class Test {
             System.out.print(treeNode.val + " ");
         }
 
+        System.out.println("\n=========levelOrder()==========");
+        binaryTree.levelOrder(root);
+
         System.out.println("\n=========nodeSize()==========");
         System.out.println("nodeSize: " + binaryTree.nodeSize(root));
 
@@ -47,8 +50,5 @@ public class Test {
 
         System.out.println("\n=========getHeight()==========");
         System.out.println("height: " + binaryTree.getHeight(root));
-
-        System.out.println("\n=========find(root,'A')==========");
-        System.out.println(binaryTree.find(root, 'C'));
     }
 }

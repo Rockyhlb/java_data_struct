@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @author: code_hlb
@@ -130,6 +132,23 @@ public class BinaryTree {
 
         ret.add(root);
         return ret;
+    }
+
+    // 层序遍历
+    public void levelOrder(TreeNode root) {
+        if (root == null) return;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            System.out.print(cur.val + " ");
+            if (cur.left != null) {
+                queue.offer(cur.left);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+            }
+        }
     }
 
     // 获得当前二叉树的节点数,通过前序遍历完成
