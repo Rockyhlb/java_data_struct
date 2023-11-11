@@ -1,8 +1,5 @@
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author: code_hlb
@@ -32,7 +29,7 @@ public class BinaryTree {
      * 前序遍历： A B D H E C F G
      * 中序遍历： D H B E A F C G
      * 后序遍历： H D E B F G C A
-     * 层次遍历：
+     * 层次遍历： A B C D E F G H
      */
     public TreeNode init() {
         TreeNode A = new TreeNode('A');
@@ -59,6 +56,23 @@ public class BinaryTree {
         System.out.print(root.val + " ");
         preOrder(root.left);
         preOrder(root.right);
+    }
+
+    // 非递归实现前序遍历
+    public void preOrderNor(TreeNode root) {
+        if (root == null) return;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        TreeNode top = null;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                System.out.print(cur.val + " ");
+                cur = cur.left;
+            }
+            top = stack.pop();
+            cur = top.right;
+        }
     }
 
     /*List<TreeNode> list = new LinkedList<>();
@@ -96,6 +110,23 @@ public class BinaryTree {
         inOrder(root.right);
     }
 
+    // 非递归实现中序遍历
+    public void inOrderNor(TreeNode root) {
+        if (root == null) return;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        TreeNode top = null;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            top = stack.pop();
+            System.out.print(top.val + " ");
+            cur = top.right;
+        }
+    }
+
     // 将中序遍历的结果存储到list当中
     public List<TreeNode> inOrder2(TreeNode root) {
         List<TreeNode> ret = new ArrayList<>();
@@ -117,6 +148,31 @@ public class BinaryTree {
         postOrder(root.left);
         postOrder(root.right);
         System.out.print(root.val + " ");
+    }
+
+    // ***非递归实现后序遍历***
+    public void postOrderNor(TreeNode root) {
+        if (root == null) return;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        TreeNode top = null;
+        TreeNode prev = null;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            top = stack.peek();
+            // 如果判断条件只有top.right为空，那么当左子树为空，右子树不为空时就会导致右子树被一直加入栈中，进入死循环
+            if (top.right == null || top.right == prev) {
+                stack.pop();
+                System.out.print(top.val + " ");
+                // 记录当前节点已经被打印，避免进入死循环
+                prev = top;
+            }else {
+                cur = top.right;
+            }
+        }
     }
 
     // 将后序遍历的结果存储到list当中
