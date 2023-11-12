@@ -91,4 +91,17 @@ public class TestHeap {
     public boolean isFull() {
         return usedSize == elems.length;
     }
+
+    // 堆排序 --> 升序：建大堆   降序：建小堆
+    public void heapSort() {
+        // 将堆按从小到大排序
+        int end = usedSize - 1;
+        // 1、调整为大根堆
+        // 2、让第一个元素和最后一个未排序的元素进行交换
+        while (end > 0) {
+            swap(0,end);
+            shiftDown(0,end);
+            end--;
+        }
+    }
 }

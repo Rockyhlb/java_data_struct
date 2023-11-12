@@ -8,6 +8,15 @@ import java.util.PriorityQueue;
 public class Test {
 
     public static void main(String[] args) {
+
+        TestHeap testHeap = new TestHeap();
+        int[] arrays = {43, 21, 22, 55, 2, 7, 56, 45, 33, 88};
+        testHeap.initHeap(arrays);
+        testHeap.createHeap();
+        testHeap.heapSort();
+    }
+
+    public static void main2(String[] args) {
 /*       1、PriorityQueue中放置的元素必须要能够比较大小，不能插入无法比较大小的对象
          2、不能插入null对象，不然会报空指针异常
          3、没有“容量限制”（扩容），可以插入任意多个元素，其内部可以自动扩容
