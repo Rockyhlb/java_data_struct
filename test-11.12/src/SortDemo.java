@@ -1,3 +1,4 @@
+import java.util.Stack;
 
 /**
  * @BelongsProject: test-11.12
@@ -118,7 +119,7 @@ public class SortDemo {
      *    时间复杂度: O(N*logN)  -->   比插入，选择，希尔排序更快
      *               数据量很大时，堆排序 一定 比希尔排序快
      *    空间复杂度：O(1)
-     *    稳定性   ：不稳定的
+     *    稳定性   ：不稳定
      */
     public void heapSort(int[] arrays) {
         createBigHeap(arrays);
@@ -175,7 +176,7 @@ public class SortDemo {
     }
 
     /**
-     * 6、快速排序  : 本质是二叉树，
+     * 6、快速排序  : 本质是二叉树的递归，因此非极端情况下不建议使用快排
      *    时间复杂度
      *        最好情况：O(N*logN)   -->  (满二叉树或完全二叉树)
      *        最坏情况：O(N^2)      -->  (单分支树)
@@ -185,9 +186,9 @@ public class SortDemo {
      *    稳定性   : 不稳定
      */
     public void quickSort(int[] arrays) {
-        quick(arrays,0,arrays.length - 1);
+        quick1(arrays,0,arrays.length - 1);
     }
-
+    // 递归排序基准的前半部分和后半部分
     private static void quick(int[] arrays,int start,int end) {
         // 左边是一个节点或一个节点都没有时
         if (start >= end) {
@@ -197,8 +198,89 @@ public class SortDemo {
         quick(arrays,start,pivot - 1);
         quick(arrays,pivot + 1,end);
     }
-    // 找基准
-    private static int partition(int[] arrays,int left,int right) {
+
+    // 快排有两种优化方法，可以通过减少递归次数来减少栈帧的建立，从而减少内存的开销
+    // 分别是 三数取中 和 插入排序方法
+    private static void quick1(int[] arrays,int start,int end) {
+        // 左边是一个节点 或 一个节点都没有时
+        if (start >= end) {
+            return;
+        }
+        // 1、三数取中(通过降低树的高度来降低空间复杂度，但是并不能保证时间复杂度的降低)
+        int mid = midOfThree(arrays,start,end);
+        // 交换完以后，start位置的元素一定是中间大的元素
+        swap(arrays,start,mid);
+
+        // 2、因为二叉树中最后几排的节点数量占比约为总节点的2/3,因此我们可以采用插入排序，减少递归次数
+        // 递归到小的区间时，可以使用插入排序
+        if (end - start + 1 <= 10) {
+            insertSortRange(arrays,start,end);
+            // 此时已经有序，打断递归
+            return;
+        }
+        int pivot = partition(arrays,start,end);
+        quick1(arrays,start,pivot - 1);
+        quick1(arrays,pivot + 1,end);
+    }
+    private static int midOfThree(int[] arrays,int left,int right) {
+        int mid = (left + right) / 2;
+        if (arrays[left] > arrays[right]){
+            if (arrays[mid] > arrays[left]) {
+                return left;
+            }else if (arrays[mid] < arrays[right]){
+                return right;
+            }else {
+                return mid;
+            }
+        }else {
+            if (arrays[mid] > arrays[right]) {
+                return right;
+            }else if (arrays[mid] < arrays[left]){
+                return left;
+            }else {
+                return mid;
+            }
+        }
+    }
+
+    private static void insertSortRange(int[] arrays,int begin,int end) {
+        for (int i = begin + 1; i <= end; i++) {
+            int tmp = arrays[i];
+            int j = i - 1;
+            for (; j >= begin; j--) {
+                if (arrays[j] > tmp) {
+                    arrays[j + 1] = arrays[j];
+                } else {
+                    break;
+                }
+            }
+            arrays[j + 1] = tmp;
+        }
+    }
+
+    // 快排有三种递归的实现方法，分别是挖坑法，霍尔法，前后指针法  最经常用的是挖坑法，其次是霍尔，前后指针了解即可
+    // 1、挖坑法，返回新的基准（最经常使用的）
+    private static int partition(int[] arrays,int left,int right){
+        int key = arrays[left];
+        // 记录最初left的位置
+        while (left < right) {
+            // 单独的一重循环，因此还要限制right的下标访问，最终right一定是比 key 小的值
+            while (left < right && arrays[right] >= key) {
+                right--;
+            }
+            arrays[left] = arrays[right];
+            // 最后left一定是比 key 大的值
+            while (left < right && arrays[left] <= key) {
+                left++;
+            }
+            arrays[right] = arrays[left];
+        }
+        arrays[left] = key;
+        return left;
+    }
+
+    // 2、霍尔法
+    private static int partition1(int[] arrays,int left,int right) {
         int key = arrays[left];
         // 记录最初left的位置
         int i = left;
@@ -219,4 +301,65 @@ public class SortDemo {
         // 此时的left就是新的基准
         return left;
     }
+
+    // 3、前后指针法
+    private static int partition2(int[] arrays,int left,int right) {
+        int prev = left;
+        int cur = left + 1;
+        while (cur <= right) {
+            if (arrays[cur] < arrays[left] && arrays[++prev] != arrays[cur]) {
+                swap(arrays,cur,prev);
+            }
+            cur++;
+        }
+        swap(arrays,prev,left);
+        return prev;
+    }
+
+    // 快排用的更多的方式还是非递归,内存开销小，不容易发生栈溢出
+    public void quickSort1Nor(int[] arrays) {
+        Stack<Integer> stack = new Stack<>();
+        int left = 0;
+        int right = arrays.length - 1;
+
+        int pivot = partition(arrays,left,right);
+        // 左边有两个元素
+        if (pivot - 1 > left) {
+            // 下次取出作为left
+            stack.push(left);
+            // 下次取出作为right
+            stack.push(pivot - 1);
+        }
+        if (pivot + 1 < right) {
+            stack.push(pivot + 1);
+            stack.push(right);
+        }
+
+        while (!stack.isEmpty()) {
+            right = stack.pop();
+            left = stack.pop();
+
+            pivot = partition(arrays,left,right);
+            // 左边有两个元素
+            if (pivot - 1 > left) {
+                stack.push(left);
+                stack.push(pivot - 1);
+            }
+            if (pivot + 1 < right) {
+                stack.push(pivot + 1);
+                stack.push(right);
+            }
+        }
+    }
+
+    /**
+     * 7、归并排序  : 是采用分治法的典型例子，将已有序的子序列合并，得到完全有序的序列
+     *    时间复杂度
+     *        最好情况：
+     *        最坏情况：
+     *    空间复杂度
+     *        最好情况：
+     *        最好情况：
+     *    稳定性   :
+     */
 }
