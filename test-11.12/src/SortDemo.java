@@ -47,7 +47,7 @@ public class SortDemo {
         }
     }
 
-    public void shell(int[] arrays,int gap) {
+    private void shell(int[] arrays,int gap) {
         for (int i = gap; i < arrays.length; i++) {
             int tmp = arrays[i];
             // i++往前走后，j也跟着往前走1步
@@ -83,7 +83,7 @@ public class SortDemo {
             swap(arrays,minIndex,i);
         }
     }
-    public static void swap(int[] arrays,int i,int j) {
+    private static void swap(int[] arrays,int i,int j) {
         int tmp = arrays[i];
         arrays[i] = arrays[j];
         arrays[j] = tmp;
@@ -158,7 +158,7 @@ public class SortDemo {
      * 5、冒泡排序 ： 每一次将最大元素移动到最右端
      *    时间复杂度: O(N^2) 如果加了优化，最好情况O(N)
      *    空间复杂度：O(1)
-     *    稳定性   ：不稳定
+     *    稳定性   ：稳定
      */
     public void bubbleSort(int[] arrays) {
         for (int i = 0; i < arrays.length - 1; i++) {
@@ -264,12 +264,16 @@ public class SortDemo {
         int key = arrays[left];
         // 记录最初left的位置
         while (left < right) {
+            // 为什么要从 right 开始遍历，而不是 left呢？
+            // 答：因为如果从left开始遍历，可能会导致最终的新基准大于当前基准，不利于排序
             // 单独的一重循环，因此还要限制right的下标访问，最终right一定是比 key 小的值
             while (left < right && arrays[right] >= key) {
                 right--;
             }
             arrays[left] = arrays[right];
             // 最后left一定是比 key 大的值
+            // 这里的arrays[left] <= key 可以修改为 arrays[left] < key么？
+            // 答：不能，如果末尾数据和基准数据一致时，right就无法向前移动，从而导致死循环的产生
             while (left < right && arrays[left] <= key) {
                 left++;
             }
@@ -354,12 +358,103 @@ public class SortDemo {
 
     /**
      * 7、归并排序  : 是采用分治法的典型例子，将已有序的子序列合并，得到完全有序的序列
-     *    时间复杂度
-     *        最好情况：
-     *        最坏情况：
-     *    空间复杂度
-     *        最好情况：
-     *        最好情况：
-     *    稳定性   :
+     *               缺点在于需要O(N)的空间复杂度，因此更多用于解决在磁盘中的排序问题，属于最常用的外部排序
+     *    时间复杂度: O(N*logN)
+     *    空间复杂度: O(N)
+     *    稳定性   : 稳定
      */
+    public void mergeSort(int[] arrays) {
+        mergeSortFunction(arrays,0,arrays.length - 1);
+    }
+    private static void mergeSortFunction(int[] arrays,int left,int right) {
+        if (left >= right) {
+            return;
+        }
+        int mid = (left + right) / 2;
+        // 分解部分  从mid向左右两端分解
+        mergeSortFunction(arrays,left,mid);
+        mergeSortFunction(arrays,mid + 1,right);
+        // 合并部分
+        merge(arrays,left,right,mid);
+    }
+    private static void merge(int[] arrays, int left, int right, int mid) {
+        // 演变成两个有序数组的合并
+         int s1 = left;
+         // int e1 = mid;
+         int s2 = mid + 1;
+         // int e2 = right;
+        int[] tmpArr = new int[right - left + 1];
+        int k = 0;
+        // 两个区间都有数据时
+        while(s1 <= mid && s2 <= right) {
+            if (arrays[s2] <= arrays[s1]) {
+                tmpArr[k++] = arrays[s2++];
+            }else {
+                tmpArr[k++] = arrays[s1++];
+            }
+        }
+        while(s1 <= mid) {
+            tmpArr[k++] = arrays[s1++];
+        }
+        while (s2 <= right) {
+            tmpArr[k++] = arrays[s2++];
+        }
+        // 将tmpArr中的有序数据插入到原数组中
+        for (int i = 0; i < tmpArr.length; i++) {
+            arrays[i + left] = tmpArr[i];
+        }
+    }
+    // 归并排序的非递归实现
+    public void mergeSortNor(int[] arrays) {
+        int gap = 1;
+        while (gap < arrays.length) {
+            for (int i = 0; i < arrays.length; i += 2*gap) {
+                int left = i;
+                int mid = left + gap - 1;
+                int right = mid + gap;
+                if (mid >= arrays.length) {
+                    mid = arrays.length-1;
+                }
+                if (right >= arrays.length) {
+                    right = arrays.length-1;
+                }
+                merge(arrays,left,right,mid);
+            }
+            gap *= 2;
+        }
+    }
+
+    /**
+     * 8、计数排序: 建立一个计数数组，长度为待排排序数组区间加一，再遍历数组,将对应索引处加一
+     *             在数据范围集中时，效率很高，但是适用范围及场景有限
+     *    时间复杂度：O[Max(N,范围)]
+     *    空间复杂度: O(范围)
+     *    稳定性   : 稳定
+     */
+    public void countSort(int[] arrays) {
+        // 1、找到数组的最大值 和 最小值
+        int maxNum = arrays[0];
+        int minNum = arrays[0];
+        for (int i = 1; i < arrays.length; i++) {
+            if (arrays[i] > maxNum) {
+                maxNum = arrays[i];
+            }else if (arrays[i] < minNum){
+                minNum = arrays[i];
+            }
+        }
+        // 2、建立计数数组
+        int[] countArr = new int[maxNum - minNum + 1];
+        for (int array : arrays) {
+            // 开始计数
+            countArr[array - minNum]++;
+        }
+        // 3、遍历计数数组，把当前元素写回arrays
+        int index = 0;
+        for (int i = 0; i < countArr.length; i++) {
+            while (countArr[i] > 0) {
+                arrays[index++] = i + minNum;
+                countArr[i]--;
+            }
+        }
+    }
 }
