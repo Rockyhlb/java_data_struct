@@ -3,7 +3,7 @@
  * @BelongsProject: test-11.16
  * @BelongsPackage: PACKAGE_NAME
  * @CreateTime : 2023-11-16 08:46
- * @Description: 哈希表的实现
+ * @Description: 哈希表(HashMap)的实现
  * @Author: code_hlb
  */
 public class HashBuck {
@@ -24,6 +24,7 @@ public class HashBuck {
      *                              各个桶中的元素通过单链表连接起来，再将各链表的头节点存储在哈希表中，数组 + 链表的结构
      *                              当链表长度超过8 且 数组长度超过64时，采用 数组 + 红黑树的结构
      *                              在 JDK1.8之前链表采用头插法，1.8开始采用尾插法
+     *   3、HashMap 增删查改的时间复杂度都是O(1),是典型的牺牲空间节省时间的例子
      */
     static class Node {
         public int key;
