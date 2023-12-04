@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * @BelongsProject: test-11.30
  * @BelongsPackage: PACKAGE_NAME
@@ -11,13 +13,32 @@ public class Test {
         for (int elem:nums) {
             System.out.printf(elem + " ");
         }
-        // Demo.bubbleSort(nums);
-        // Demo.insertSort(nums);
-        // Demo.selectSort1(nums);
-        // Demo.shellSort(nums);
-        // Demo.heapSort(nums);
-        // Demo.quickSort(nums);
-        Demo.countSort(nums);
+        Random rd = new Random();
+        int[] nums1 = new int[10000];
+        for (int i = 0; i < nums1.length; i++) {
+            nums1[i] = rd.nextInt(100000);
+        }
+        // SortDemo.bubbleSort(nums);
+        // SortDemo.bubbleSort(nums1);
+
+        // SortDemo.insertSort(nums);
+        // SortDemo.insertSort(nums1);
+
+        // SortDemo.selectSort1(nums);
+        // SortDemo.selectSort1(nums1);
+
+        // SortDemo.shellSort(nums);
+        // SortDemo.shellSort(nums1);
+
+        // SortDemo.heapSort(nums);
+        // SortDemo.heapSort(nums1);
+
+        SortDemo.quickSort(nums);
+        SortDemo.quickSort(nums1);
+
+        // SortDemo.countSort(nums);
+        // SortDemo.countSort(nums1);
+
         System.out.println();
         for (int elem:nums) {
             System.out.printf(elem + " ");

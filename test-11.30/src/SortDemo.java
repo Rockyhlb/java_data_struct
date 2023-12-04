@@ -1,5 +1,3 @@
-import java.util.PriorityQueue;
-
 /**
  * @BelongsProject: test-11.30
  * @BelongsPackage: PACKAGE_NAME
@@ -7,7 +5,7 @@ import java.util.PriorityQueue;
  * @Description: 排序算法
  * @Author: code_hlb
  */
-public class Demo {
+public class SortDemo {
     // 1、冒泡排序
     public static void bubbleSort(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
@@ -68,7 +66,7 @@ public class Demo {
         }
     }
 
-    //4、选择排序  每次选出最小元素往两边插入
+    //4、选择排序  每次选出最小元素往左边插入
     public static void selectSort(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             int minIndex = i;
@@ -77,7 +75,9 @@ public class Demo {
                     minIndex = j;
                 }
             }
-            swap(nums,i,minIndex);
+            if(i != minIndex) {
+                swap(nums, i, minIndex);
+            }
         }
     }
     // 优化成每次找到最大和最小值
@@ -95,6 +95,7 @@ public class Demo {
                     maxIndex = i;
                 }
             }
+            // 将最小值往左边放，最大值往右边放
             swap(nums,left,minIndex);
             swap(nums,right,maxIndex);
             left++;
@@ -145,11 +146,60 @@ public class Demo {
         if (start >= end) {
             return;
         }
+        // 1、三数取中法 减少递归次数
+        int mid = midOfThree(nums,start,end);
+        // System.out.println(nums[start] + " " + nums[end] + " " + nums[mid]);
+        swap(nums,start,mid);
+        // 2、小区间插入排序 减少递归次数
+        if (end - start + 1 <= 15) {
+            insertSortOfRange(nums,start,end);
+            // 退出递归
+            return;
+        }
         // 接收新的基准
         int pivot = partition(nums,start,end);
         quick(nums,start,pivot - 1);
         quick(nums,pivot + 1,end);
     }
+
+    private static void insertSortOfRange(int[] nums,int start,int end) {
+        for (int i = start + 1; i <= end; i++) {
+            int tmp = nums[i];
+            int j = i - 1;
+            for (; j >= start; j--) {
+                if (nums[j] > tmp) {
+                    nums[j + 1] = nums[j];
+                }else {
+                    break;
+                }
+            }
+            nums[j + 1] = tmp;
+        }
+    }
+
+    private static int midOfThree(int[] nums,int start, int end) {
+        int mid = (start + end) / 2;
+        if (nums[start] > nums[end]) {
+            if (nums[mid] > nums[start]) {
+                return start;
+            }else if (nums[mid] < nums[end]){
+                return end;
+            }else {
+                return mid;
+            }
+        }else if (nums[start] <= nums[end]) {
+            if (nums[mid] > nums[end]) {
+                return end;
+            }else if (nums[mid] < nums[start]){
+                return start;
+            }else {
+                return mid;
+            }
+        }else {
+            return start;
+        }
+    }
+
     private static int partition(int[] nums,int start,int end) {
         // 1、挖坑法
         int tmp = nums[start];
@@ -167,6 +217,26 @@ public class Demo {
         }
         // 填补最后一个坑
         nums[start] = tmp;
+        return start;
+    }
+
+    private static int partition1(int[] nums,int start,int end) {
+        // 2、霍尔法返回基准
+        int tmp = nums[start];
+        // 记录原来的基准
+        int i = start;
+        while (start < end) {
+            while (start < end && nums[end] >= tmp) {
+                end--;
+            }
+            while (start < end && nums[start] <= tmp) {
+                start++;
+            }
+            swap(nums,start,end);
+        }
+        // 将start 和 end 相遇的位置与原来的基准交换
+        swap(nums,start,i);
+        // 返回新的基准
         return start;
     }
 
