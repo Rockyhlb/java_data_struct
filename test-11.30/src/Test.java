@@ -33,8 +33,10 @@ public class Test {
         // SortDemo.heapSort(nums);
         // SortDemo.heapSort(nums1);
 
-        SortDemo.quickSort(nums);
-        SortDemo.quickSort(nums1);
+        // SortDemo.quickSort(nums);
+        // SortDemo.quickSort(nums1);
+        SortDemo.quickSortNo(nums);
+        SortDemo.quickSortNo(nums1);
 
         // SortDemo.countSort(nums);
         // SortDemo.countSort(nums1);

@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * @BelongsProject: test-11.30
  * @BelongsPackage: PACKAGE_NAME
@@ -146,6 +150,7 @@ public class SortDemo {
         if (start >= end) {
             return;
         }
+        // 通过减少递归次数来减少空间复杂度
         // 1、三数取中法 减少递归次数
         int mid = midOfThree(nums,start,end);
         // System.out.println(nums[start] + " " + nums[end] + " " + nums[mid]);
@@ -217,6 +222,7 @@ public class SortDemo {
         }
         // 填补最后一个坑
         nums[start] = tmp;
+        // 返回新的基准
         return start;
     }
 
@@ -238,6 +244,41 @@ public class SortDemo {
         swap(nums,start,i);
         // 返回新的基准
         return start;
+    }
+
+    // 快排算法用的最多的还是通过栈实现非递归形式，内存开销小，不会发生栈溢出
+    public static void quickSortNo(int[] nums) {
+        Stack<Integer> stack = new Stack<>();
+        int start = 0;
+        int end = nums.length - 1;
+        int pivot = partition(nums,start,end);
+        // 当左边有两个及以上节点时
+        if (pivot - 1 > start) {
+            stack.push(start);
+            stack.push(pivot - 1);
+        }
+        // 当右边有两个及以上节点时
+        if (pivot + 1 < end) {
+            stack.push(pivot + 1);
+            stack.push(end);
+        }
+
+        while (!stack.isEmpty()) {
+            end = stack.pop();
+            start = stack.pop();
+            // 返回新的基准
+            pivot = partition(nums,start,end);
+            // 当左边仍然还有两个以上节点时，继续入栈
+            if (pivot - 1 > start) {
+                stack.push(start);
+                stack.push(pivot - 1);
+            }
+            // 右边
+            if (pivot + 1 < end) {
+                stack.push(pivot + 1);
+                stack.push(end);
+            }
+        }
     }
 
     // 7、归并排序
