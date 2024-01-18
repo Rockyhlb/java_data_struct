@@ -43,7 +43,7 @@ public class Demo2 {
 
     public static void main(String[] args) {
         int[] nums = {1,1,2};
-        Demo1 demo1 = new Demo1();
+        Demo2 demo1 = new Demo2();
         List<List<Integer>> resList = demo1.permuteUnique(nums);
         Iterator iterator = resList.iterator();
         while (iterator.hasNext()) {
