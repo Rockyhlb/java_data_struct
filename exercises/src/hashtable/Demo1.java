@@ -1,4 +1,4 @@
-package HashTable;
+package hashtable;
 
 /**
  * @BelongsProject: exercises
@@ -31,8 +31,7 @@ public class Demo1 {
         }
         // 遍历ransomNote
         for (int i = 0; i < ransomNote.length(); i++) {
-            array[ransomNote.charAt(i) - 'a']--;
-            if (array[ransomNote.charAt(i) - 'a'] < 0) {
+            if (--array[ransomNote.charAt(i) - 'a'] < 0) {
                 // 日志当中没有该字符
                 return false;
             }
