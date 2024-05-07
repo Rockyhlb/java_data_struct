@@ -24,6 +24,7 @@ public class Demo5 {
         resHead.next = head;
         ListNode leftNode = resHead;
         ListNode rightNode = resHead.next;
+        // 将 leftNode 定位到left的前一个节点
         for (int i = 0; i < left - 1; i++) {
             leftNode = leftNode.next;
         }
@@ -31,6 +32,7 @@ public class Demo5 {
         for (int i = 0; i < right; i++) {
             rightNode = rightNode.next;
         }
+        // 将leftnode的尾部拼接上反转后的头节点
         leftNode.next = reverse(leftNode.next, rightNode);
         return resHead.next;
     }
@@ -40,7 +42,7 @@ public class Demo5 {
         ListNode cur = leftNode;
         while (cur != rightNode) {
             ListNode nextNode = cur.next;
-            // 采用头插，第一次将right的下一个节点作为尾，后面不断头插实现链表的反转
+            // 采用头插，第一次循环将right的下一个节点拼接到尾部，后续循环不断头插实现链表的反转
             cur.next = pre;
             pre = cur;
             cur = nextNode;

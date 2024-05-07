@@ -21,6 +21,11 @@ public class ListNode {
         this.random = null;
     }
 
+    public ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+
     public ListNode(int val, ListNode next, ListNode random) {
         this.val = val;
         this.next = next;
