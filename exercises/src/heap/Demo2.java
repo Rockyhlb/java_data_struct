@@ -1,5 +1,8 @@
 package heap;
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
 /**
  * @BelongsProject: exercises
  * @BelongsPackage: heap
@@ -29,8 +32,47 @@ public class Demo2 {
      * 输入：k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]
      * 输出：6
      */
-    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+    public static int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        /**
+         * 贪心算法+堆
+         * 题目中限定了可以选择的次数最多为 k 次，因此我们应该贪心地保证每次选择投资的项目获取的利润最大，
+         * 这样就能保持选择 k 次后获取的利润最大.
+         * 利用大根堆的特性，将所有能够投资的项目的利润全部压入到堆中，每次从堆中取出最大值，然后更新手中持有的资本，
+         * 同时将待选的项目利润进入堆，不断重复上述操作得出最优解.
+         */
+        int len = profits.length;
+        // 采用二维数组存储 profits 和 capital
+        int[][] arr = new int[len][2];
+        for (int i = 0; i < len; i++) {
+            arr[i][0] = capital[i];
+            arr[i][1] = profits[i];
+        }
+        // 1、将项目按照所需资本(capital)从小到大进行排序
+        Arrays.sort(arr, (a, b) -> (a[0] - b[0]));
+        // 借用 大根堆的特性 将所有能够投资的项目的利润全部压入到堆中，每次从堆中取出最大值，然后更新手中持有的资本
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> (y - x));
+        int cur = 0;  // 标记当前已插入项目的下标位置
+        for (int i = 0; i < k; i++) {
+            // 2、每次选择时，从所有投入资本小于等于 w 的项目中选择利润最大的项目 j，大根堆的队顶就是利润最大的项目
+            while (cur < len && arr[cur][0] <= w) {
+                pq.offer(arr[cur][1]);
+                cur++;
+            }
+            // 3、更新手中持有的资本为 w+=profits[j],同时再从所有花费资本小于等于 w+profits[j]的项目中选择，不断选择 k 次得出最优解.
+            if (!pq.isEmpty()) {
+                w += pq.poll();
+            } else {
+                break;
+            }
+        }
+        return w;
+    }
 
-        return -1;
+    public static void main(String[] args) {
+        // 输入：k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]
+        int k = 3, w = 0;
+        int[] profits = {1, 2, 3};
+        int[] capital = {0, 1, 2};
+        System.out.println(findMaximizedCapital(k, w, profits, capital));
     }
 }
