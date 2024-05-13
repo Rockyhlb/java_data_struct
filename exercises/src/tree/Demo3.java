@@ -16,7 +16,7 @@ public class Demo3 {
      * 输出：[4,7,2,9,6,3,1]
      */
     public static TreeNode invertTree(TreeNode root) {
-        if(root == null) {
+        if (root == null) {
             return null;
         }
         if (root.left != null || root.right != null) {
