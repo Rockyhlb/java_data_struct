@@ -30,7 +30,7 @@ public class Demo13 {
             return null;
         }
         // 当有个节点等于根节点时，返回根节点
-        if (p == root || q == root) {
+        if (root.val == p.val || root.val == q.val) {
             return root;
         }
         // 递归遍历左子树/右子树
@@ -56,5 +56,12 @@ public class Demo13 {
         TreeNode p = new TreeNode(5);
         TreeNode q = new TreeNode(1);
         System.out.println(lowestCommonAncestor(root, p, q));
+
+        // 输入：root = [1,2], p = 1, q = 2    输出：1
+        TreeNode root1 = new TreeNode(1);
+        root1.left = new TreeNode(2);
+        TreeNode p1 = new TreeNode(1);
+        TreeNode q1 = new TreeNode(2);
+        System.out.println(lowestCommonAncestor(root1, p1, q1));
     }
 }
