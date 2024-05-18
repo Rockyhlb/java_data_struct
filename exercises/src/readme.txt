@@ -8,3 +8,4 @@ package stack: 栈类问题
 package tree : 树类问题
 package district: 区间
 package graph: 图类问题
+package binary_search: 二分查找
