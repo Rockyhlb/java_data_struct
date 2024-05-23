@@ -4,7 +4,7 @@ package others;
  * @BelongsProject: exercises
  * @BelongsPackage: others
  * @CreateTime : 2024/5/22 8:33
- * @Description: TODO
+ * @Description: 位运算
  * @Author: code_hlb
  */
 public class Demo1 {
