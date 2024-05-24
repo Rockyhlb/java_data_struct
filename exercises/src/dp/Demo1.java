@@ -4,7 +4,7 @@ package dp;
  * @BelongsProject: exercises
  * @BelongsPackage: arrays
  * @CreateTime : 2024/4/19 21:35
- * @Description: TODO
+ * @Description: 动规
  * @Author: code_hlb
  */
 public class Demo1 {

@@ -11,6 +11,7 @@
 | [package heap](./heap)                     | 堆类问题                       |
 | [package linklist](./linklist)             | 链表问题                       |
 | [package others](./others)                 | 位运算/数学                     |
+| [package recall](./recall)                 | 回溯                         |
 | [package sliding_window](./sliding_window) | 滑动窗口                       |
 | [package stack](./stack)                   | 栈类问题                       |
 | [package tree](./tree)                     | 树类问题                       |

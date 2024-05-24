@@ -7,7 +7,7 @@ import java.util.List;
  * @BelongsProject: exercises
  * @BelongsPackage: district
  * @CreateTime : 2024/5/10 9:30
- * @Description: TODO
+ * @Description: 区间
  * @Author: code_hlb
  */
 public class Demo1 {

@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @BelongsProject: exercises
  * @BelongsPackage: sliding_window
  * @CreateTime : 2024/5/21 14:17
- * @Description: TODO
+ * @Description: 滑动窗口
  * @Author: code_hlb
  */
 public class Demo1 {
