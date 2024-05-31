@@ -5,7 +5,8 @@
 | [package arrays](./arrays)                 | 数组/字符串/双指针/贪心算法(局部最优到全局最优) |
 | [package binary_search](./binary_search)   | 二分查找                       |
 | [package district](./district)             | 区间                         |
-| [package dp](./dp)                         | 动态规划                       |
+| [divide](./divide)                         | 分治                         |
+| [package dp](./dp)                         | 动态规划(空间换时间)                |
 | [package graph](./graph)                   | 图类问题                       |
 | [package hashtable](./hashtable)           | Hash类问题                    |
 | [package heap](./heap)                     | 堆类问题                       |

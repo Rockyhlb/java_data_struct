@@ -8,9 +8,9 @@ package linklist;
  * @Author: code_hlb
  */
 public class ListNode {
-    int val;
-    ListNode next;
-    ListNode random;
+    public int val;
+    public ListNode next;
+    public ListNode random;
 
     public ListNode() {
     }
