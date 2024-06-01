@@ -1,8 +1,5 @@
 package arrays;
 
-import java.net.InetAddress;
-import java.net.StandardSocketOptions;
-
 /**
  * @BelongsProject: exercises
  * @BelongsPackage: arrays
@@ -10,7 +7,7 @@ import java.net.StandardSocketOptions;
  * @Description: TODO
  * @Author: code_hlb
  */
-public class Demo4 {
+public class Demo27 {
     /**
      * 18. 在字符串中找出连续最长的数字串
      * 现有一个字符串str，输出字符串str中的最长的数字子串。
@@ -42,37 +39,6 @@ public class Demo4 {
 
     public static void main(String[] args) {
         String str = "dada22fs222sd11das678686dsad";
-        System.out.println(findLongest(str));
-    }
-
-    public static void main1(String[] args) {
-        Integer io1 = 99;
-        int io2 = 99;
-        System.out.println(io1 == io2);
-        Integer io3 = Integer.valueOf(99);
-        System.out.println(io1 == io3);
-        System.out.println(io2 == io3);
-        Integer io4 = new Integer(99);
-        System.out.println(io1 == io4);
-        System.out.println(io2 == io4);
-        System.out.println(io3 == io4);
-    }
-
-    public static void main2(String[] args) {
-        Thread t1 = new Thread(() -> {
-            System.out.println(System.currentTimeMillis());
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        Thread t2 = new Thread(() -> {
-            System.out.println(System.currentTimeMillis());
-        });
-
-        t1.start();
-        t2.start();
+        System.out.println(findLongest(str));  // 678686
     }
 }

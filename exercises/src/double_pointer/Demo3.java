@@ -1,17 +1,15 @@
-package arrays;
+package double_pointer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @BelongsProject: exercises
- * @BelongsPackage: arrays
+ * @BelongsPackage: double_pointer
  * @CreateTime : 2024/4/21 15:17
  * @Description: TODO
  * @Author: code_hlb
  */
-public class Demo8 {
+public class Demo3 {
     /**
      * 167. 两数之和 II - 输入有序数组
      * 给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列，请你从数组中找出满足相加之和等于目标数 target 的两个数。

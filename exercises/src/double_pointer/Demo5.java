@@ -1,15 +1,15 @@
-package arrays;
+package double_pointer;
 
 import java.util.*;
 
 /**
  * @BelongsProject: exercises
- * @BelongsPackage: arrays
+ * @BelongsPackage: double_pointer
  * @CreateTime : 2024/4/21 16:08
  * @Description: TODO
  * @Author: code_hlb
  */
-public class Demo9 {
+public class Demo5 {
     /**
      * 15. 三数之和
      * 给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，
@@ -67,7 +67,7 @@ public class Demo9 {
     }
 
     public static void main(String[] args) {
-        int[] nums = {-1,0,1,2,-1,-4};
+        int[] nums = {-1, 0, 1, 2, -1, -4};
         System.out.println(threeSum(nums));
     }
 }

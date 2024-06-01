@@ -1,13 +1,13 @@
-package arrays;
+package double_pointer;
 
 /**
  * @BelongsProject: exercises
- * @BelongsPackage: arrays
+ * @BelongsPackage: double_pointer
  * @CreateTime : 2024/4/18 11:26
  * @Description: TODO
  * @Author: code_hlb
  */
-public class Demo6 {
+public class Demo1 {
     /**
      * 125. 验证回文串
      * 如果在将所有大写字符转换为小写字符、并移除所有非字母数字字符之后，短语正着读和反着读都一样。则可以认为该短语是一个 回文串 。
