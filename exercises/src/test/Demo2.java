@@ -38,4 +38,13 @@ public class Demo2 {
         t1.start();
         t2.start();
     }
+
+    public static void main(String[] args) {
+//        System.out.println(4 | 3);
+        byte b1 = 126;
+        byte b2 = 5;
+        System.out.println(Byte.MAX_VALUE); // 127
+        System.out.println(Byte.MIN_VALUE); // -128
+        System.out.println((byte)(b1 + b2)); // -125
+    }
 }

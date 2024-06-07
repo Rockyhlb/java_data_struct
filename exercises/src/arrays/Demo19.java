@@ -14,11 +14,13 @@ public class Demo19 {
      * 单词 是指仅由字母组成、不包含任何空格字符的最大子字符串
      */
     public static int lengthOfLastWord(String s) {
+        // 方法1：^_^
         String[] strs = s.trim().split(" ");
         return strs[strs.length - 1].length();
     }
 
     public static int lengthOfLastWord1(String s) {
+        // 方法2：遍历尾部
         int count = 0;
         // 对字符串进行处理,去除首尾空格
         s = s.trim();
