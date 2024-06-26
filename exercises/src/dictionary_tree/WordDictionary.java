@@ -1,9 +1,5 @@
 package dictionary_tree;
 
-import javax.xml.soap.SAAJResult;
-import java.awt.image.DirectColorModel;
-import java.util.Queue;
-
 /**
  * @BelongsProject: exercises
  * @BelongsPackage: dictionary_tree
